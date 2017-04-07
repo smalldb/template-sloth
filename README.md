@@ -8,6 +8,36 @@ See https://smalldb.org/template-sloth/
 ...
 
 
+Installation
+------------
+
+Using Composer:
+
+```
+{
+    "require": {
+        "smalldb/template-sloth": "dev-master"
+    },
+}
+```
+
+Symfony's `config.yml` — add `sloth` service, it will register into Twig
+automatically:
+
+```
+services:
+        sloth:
+                class: Smalldb\TemplateSloth\Sloth
+                arguments: [ '@twig' ]
+```
+
+
+Usage
+-----
+
+...
+
+
 Documentation
 -------------
 
