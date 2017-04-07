@@ -1,0 +1,27 @@
+{
+    "name": "smalldb/template-sloth",
+    "description": "Slot-based template extension",
+    "license": "Apache-2.0",
+    "type": "symfony-bundle",
+    "homepage": "https://smalldb.org/template-sloth/",
+    "authors": [
+        {
+            "name": "Josef Kufner",
+            "email": "josef@kufner.cz"
+        }
+    ],
+    "require": {
+        "php": ">=5.6",
+        "symfony/config": "^3.2",
+        "symfony/dependency-injection": "^3.2",
+        "symfony/twig": "^3.2"
+    },
+    "require-dev": {
+        "smalldb/doc-tools": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Smalldb\\TemplateSloth\\": ""
+        }
+    }
+}
