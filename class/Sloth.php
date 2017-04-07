@@ -18,17 +18,51 @@
 
 namespace Smalldb\TemplateSloth;
 
+use Symfony\Component\HttpFoundation\StreamedResponse;
+
+
 class Sloth
 {
+	protected $twig;
 
-	public function __construct()
+	protected $layout = null;
+	protected $layout_attr = [];
+
+	protected $slots = [];
+
+
+	public function __construct(\Twig_Environment $twig)
 	{
+		$this->twig = $twig;
+		$this->twig->addGlobal('_sloth', $this);
+		$this->twig->addExtension(new SlothExtension());
 	}
 
 
-	public function __toString()
+	public function setLayout($layout, $attributes = [])
 	{
-		return __CLASS__;
+		$this->layout = $layout;
+		$this->layout_attr = $attributes;
+	}
+
+
+	public function slot($slot_name)
+	{
+		if (!isset($this->slots[$slot_name])) {
+			$this->slots[$slot_name] = new Slot($slot_name, $this);
+		}
+
+		return $this->slots[$slot_name];
+	}
+
+
+	public function response($status = 200, $headers = [])
+	{
+		if ($this->layout === null) {
+			throw new \RuntimeException('Layout not specified.');
+		}
+
+		return new StreamedResponse(function() { return $this->twig->display($this->layout, $this->layout_attr); }, $status, $headers);
 	}
 
 }

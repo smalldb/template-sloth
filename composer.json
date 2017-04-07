@@ -12,14 +12,11 @@
     ],
     "require": {
         "php": ">=5.6",
+        "symfony/http-foundation": "^3.2",
         "twig/twig": "*"
     },
     "require-dev": {
         "smalldb/doc-tools": "dev-master"
-    },
-    "conflicts": {
-        "symfony/config": "<3",
-        "symfony/dependency-injection": "<3"
     },
     "autoload": {
         "psr-4": {
