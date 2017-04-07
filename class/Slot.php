@@ -51,6 +51,15 @@ class Slot
 
 
 	/**
+	 * Returns true if slot is empty.
+	 */
+	public function isEmpty()
+	{
+		return $this->fragmentQueue->isEmpty();
+	}
+
+
+	/**
 	 * Returns the fragment on top of the queue and removes it (shifts up).
 	 * When queue is empty, null is returned.
 	 */

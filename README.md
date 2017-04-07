@@ -13,7 +13,7 @@ Installation
 
 Using Composer:
 
-```
+```.json
 {
     "require": {
         "smalldb/template-sloth": "dev-master"
@@ -24,7 +24,7 @@ Using Composer:
 Symfony's `config.yml` — add `sloth` service, it will register into Twig
 automatically:
 
-```
+```.yaml
 services:
         sloth:
                 class: Smalldb\TemplateSloth\Sloth
@@ -35,7 +35,21 @@ services:
 Usage
 -----
 
-...
+```.php
+$sloth = $this->get('sloth');
+$sloth->setLayout('layout.html.twig', [ 'user' => 'Alice']);
+$sloth->slot('content')->add(10, 'template.html.twig', [ 'foo' => 'bar' ];
+$sloth->slot('content')->add(20, 'template.html.twig', [ 'foo' => 'foo' ];
+return $sloth->response();
+```
+
+```.twig
+{% if 'content' is empty_slot %}
+  No content available.
+{% else %}
+  {% slot 'content' %}
+{% endif %}
+```
 
 
 Documentation
