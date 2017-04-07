@@ -47,6 +47,8 @@ class Slot
 		$penalty = 1 - 100. / (100. + $this->serial); 
 		$this->fragmentQueue->insert([$template, $arguments], - $weight - $penalty);
 		$this->serial++;
+
+		return $this;
 	}
 
 
