@@ -1,0 +1,4 @@
+doc/doxygen/
+vendor/
+composer.lock
+
