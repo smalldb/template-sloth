@@ -35,6 +35,11 @@ class Sloth implements \ArrayAccess
 	{
 		$this->twig = $twig;
 		$this->twig->addGlobal('_sloth', $this);
+	}
+
+
+	public function registerExtension()
+	{
 		$this->twig->addExtension(new SlothExtension());
 	}
 
@@ -62,7 +67,9 @@ class Sloth implements \ArrayAccess
 			throw new \RuntimeException('Layout not specified.');
 		}
 
-		return new StreamedResponse(function() { return $this->twig->display($this->layout, $this->layout_attr); }, $status, $headers);
+		return new StreamedResponse(function() {
+			return $this->twig->display($this->layout, $this->layout_attr);
+		}, $status, $headers);
 	}
 
 

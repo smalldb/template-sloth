@@ -31,6 +31,14 @@ services:
                 arguments: [ '@twig' ]
 ```
 
+Troubleshooting
+---------------
+
+> Error: Unexpected "slot" tag (expecting closing tag for the "…" tag defined near line …) in …
+
+This means the Sloth did not install the Twig extension. Is your dependency
+injection container configured properly?
+
 
 Usage
 -----

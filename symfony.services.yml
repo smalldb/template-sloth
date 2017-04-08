@@ -1,0 +1,21 @@
+#
+# Define Sloth services
+#
+# Usage: Import this file into your config.yml.
+#
+#     imports:
+#         - { resource: "../../vendor/smalldb/template-sloth/symfony.services.yml" }
+#
+services:
+        sloth:
+                class: Smalldb\TemplateSloth\Sloth
+                arguments: [ '@twig' ]
+                lazy: true
+
+        sloth.twig.extension:
+                class: Smalldb\TemplateSloth\SlothExtension
+                tags:
+                        - { name: 'twig.extension' }
+                private: true
+                lazy: true
+

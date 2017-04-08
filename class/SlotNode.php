@@ -36,6 +36,9 @@ class SlotNode extends \Twig_Node
 		// include: $this->loadTemplate("included_file.html", "parent_file.html", 35)->display($context);
 		$compiler->addDebugInfo($this);
 
+		// Check if Sloth is initialized
+		$compiler->write("if (isset(\$context['_sloth'])) {\n");
+
 		// Fragment foreach loop
 		$compiler->write("\$slot = \$context['_sloth']->slot(")
 			->subcompile($this->getNode('slot_name'))
@@ -53,6 +56,9 @@ class SlotNode extends \Twig_Node
 			->raw(";\n");
 
 		// End foreach
+		$compiler->write("}\n");
+
+		// End if
 		$compiler->write("}\n");
 	}
 
