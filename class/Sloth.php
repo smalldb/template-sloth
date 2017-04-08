@@ -21,7 +21,7 @@ namespace Smalldb\TemplateSloth;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 
-class Sloth
+class Sloth implements \ArrayAccess
 {
 	protected $twig;
 
@@ -64,6 +64,32 @@ class Sloth
 
 		return new StreamedResponse(function() { return $this->twig->display($this->layout, $this->layout_attr); }, $status, $headers);
 	}
+
+
+	public function offsetExists($offset)
+	{
+		return isset($this->slots[$offset]);
+	}
+
+
+	public function offsetGet($offset)
+	{
+		return $this->slot($offset);
+	}
+
+
+	public function offsetSet($offset, $value)
+	{
+		throw \RuntimeException('Invalid operation.');
+	}
+
+
+	public function offsetUnset($offset)
+	{
+		throw \RuntimeException('Invalid operation.');
+	}
+
+
 
 }
 
