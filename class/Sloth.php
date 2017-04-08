@@ -62,6 +62,12 @@ class Sloth implements \ArrayAccess
 	}
 
 
+	public function display()
+	{
+		return $this->twig->display($this->layout, $this->layout_attr);
+	}
+
+
 	public function response($status = 200, $headers = [])
 	{
 		if ($this->layout === null) {
@@ -69,7 +75,7 @@ class Sloth implements \ArrayAccess
 		}
 
 		return new StreamedResponse(function() {
-			return $this->twig->display($this->layout, $this->layout_attr);
+			return $this->display();
 		}, $status, $headers);
 	}
 
