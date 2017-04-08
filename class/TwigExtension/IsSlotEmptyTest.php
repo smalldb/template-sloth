@@ -16,37 +16,21 @@
  *
  */
 
-namespace Smalldb\TemplateSloth;
+namespace Smalldb\TemplateSloth\TwigExtension;
 
-use Twig_Extension;
-use Twig_SimpleTest as Twig_Test;
-use Twig_SimpleFunction as Twig_Function;
+use Twig_Compiler;
+use Twig_Node_Expression_Test;
 
 
-class SlothExtension extends Twig_Extension
+class IsSlotEmptyTest extends Twig_Node_Expression_Test
 {
 
-	public function getTokenParsers()
+	public function compile(Twig_Compiler $compiler)
 	{
-		return [
-			new SlotTokenParser(),
-		];
-	}
-
-
-	public function getTests()
-	{
-		return [
-			new Twig_Test('empty_slot', null, ['node_class' => 'Smalldb\TemplateSloth\IsSlotEmptyTest']),
-		];
-	}
-
-
-	public function getFunctions()
-	{
-		return [
-			new Twig_Function('slot', null, ['node_class' => 'Smalldb\TemplateSloth\SlotFunction']),
-		];
+		$compiler
+			->raw("(!isset(\$context['_sloth']) || \$context['_sloth']->slot(")
+			->subcompile($this->getNode('node'))
+			->raw(")->isEmpty())");
 	}
 
 }

@@ -13,7 +13,7 @@ services:
                 lazy: true
 
         sloth.twig.extension:
-                class: Smalldb\TemplateSloth\SlothExtension
+                class: Smalldb\TemplateSloth\TwigExtension\SlothExtension
                 tags:
                         - { name: 'twig.extension' }
                 private: true

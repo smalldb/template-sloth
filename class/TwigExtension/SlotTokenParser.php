@@ -16,21 +16,30 @@
  *
  */
 
-namespace Smalldb\TemplateSloth;
+namespace Smalldb\TemplateSloth\TwigExtension;
 
-use Twig_Compiler;
-use Twig_Node_Expression_Function;
+use Twig_TokenParser;
+use Twig_Token;
 
 
-class SlotFunction extends Twig_Node_Expression_Function
+class SlotTokenParser extends Twig_TokenParser
 {
 
-	public function compile(Twig_Compiler $compiler)
+	public function parse(Twig_Token $token)
 	{
-		$compiler
-			->raw("(\$context['_sloth']->slot(")
-			->subcompile($this->getNode('arguments'))
-			->raw("))");
+		$parser = $this->parser;
+		$stream = $parser->getStream();
+
+		$slot_name = $parser->getExpressionParser()->parseExpression();
+		$stream->expect(Twig_Token::BLOCK_END_TYPE);
+
+		return new SlotNode($slot_name, $token->getLine(), $this->getTag());
+	}
+
+
+	public function getTag()
+	{
+		return 'slot';
 	}
 
 }

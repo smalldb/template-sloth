@@ -16,30 +16,37 @@
  *
  */
 
-namespace Smalldb\TemplateSloth;
+namespace Smalldb\TemplateSloth\TwigExtension;
 
-use Twig_TokenParser;
-use Twig_Token;
+use Twig_Extension;
+use Twig_SimpleTest as Twig_Test;
+use Twig_SimpleFunction as Twig_Function;
 
 
-class SlotTokenParser extends Twig_TokenParser
+class SlothExtension extends Twig_Extension
 {
 
-	public function parse(Twig_Token $token)
+	public function getTokenParsers()
 	{
-		$parser = $this->parser;
-		$stream = $parser->getStream();
-
-		$slot_name = $parser->getExpressionParser()->parseExpression();
-		$stream->expect(Twig_Token::BLOCK_END_TYPE);
-
-		return new SlotNode($slot_name, $token->getLine(), $this->getTag());
+		return [
+			new SlotTokenParser(),
+		];
 	}
 
 
-	public function getTag()
+	public function getTests()
 	{
-		return 'slot';
+		return [
+			new Twig_Test('empty_slot', null, ['node_class' => 'Smalldb\TemplateSloth\TwigExtension\IsSlotEmptyTest']),
+		];
+	}
+
+
+	public function getFunctions()
+	{
+		return [
+			new Twig_Function('slot', null, ['node_class' => 'Smalldb\TemplateSloth\TwigExtension\SlotFunction']),
+		];
 	}
 
 }

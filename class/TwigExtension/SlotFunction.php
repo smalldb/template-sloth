@@ -16,21 +16,21 @@
  *
  */
 
-namespace Smalldb\TemplateSloth;
+namespace Smalldb\TemplateSloth\TwigExtension;
 
 use Twig_Compiler;
-use Twig_Node_Expression_Test;
+use Twig_Node_Expression_Function;
 
 
-class IsSlotEmptyTest extends Twig_Node_Expression_Test
+class SlotFunction extends Twig_Node_Expression_Function
 {
 
 	public function compile(Twig_Compiler $compiler)
 	{
 		$compiler
-			->raw("(!isset(\$context['_sloth']) || \$context['_sloth']->slot(")
-			->subcompile($this->getNode('node'))
-			->raw(")->isEmpty())");
+			->raw("(\$context['_sloth']->slot(")
+			->subcompile($this->getNode('arguments'))
+			->raw("))");
 	}
 
 }

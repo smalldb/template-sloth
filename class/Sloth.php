@@ -19,6 +19,7 @@
 namespace Smalldb\TemplateSloth;
 
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Smalldb\TemplateSloth\TwigExtension\SlothExtension;
 
 
 class Sloth implements \ArrayAccess

@@ -16,7 +16,7 @@
  *
  */
 
-namespace Smalldb\TemplateSloth;
+namespace Smalldb\TemplateSloth\TwigExtension;
 
 use Twig_Node;
 use Twig_Node_Expression;
