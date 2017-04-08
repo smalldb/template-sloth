@@ -1,6 +1,22 @@
 stages:
+        - test
         - deploy
         - post-deploy
+
+test:
+        stage: test
+        only:
+                - tags
+                - master
+        artifacts:
+                name: test-${CI_COMMIT_REF_NAME}.log
+                untracked: true
+                when: on_failure
+                paths:
+                        - test/
+        script:
+                - 'composer install'
+                - 'make test'
 
 mirror:
         stage: post-deploy
@@ -16,7 +32,7 @@ doc:
                 - tags
                 - master
         script:
-                - 'composer install --dev'
+                - 'composer install'
                 - 'echo "Destination: $DOC_INSTALL_DESTINATION/"'
                 - 'test -n "$DOC_INSTALL_DESTINATION"'
                 - '[ -d "$DOC_INSTALL_DESTINATION/$CI_BUILD_REF_NAME/" ] || mkdir -pv "$DOC_INSTALL_DESTINATION/$CI_BUILD_REF_NAME/"'
