@@ -32,10 +32,14 @@ class Sloth implements \ArrayAccess
 	protected $slots = [];
 
 
-	public function __construct(\Twig_Environment $twig)
+	public function __construct(\Twig_Environment $twig, string $default_layout = null, array $default_layout_attrs = [])
 	{
 		$this->twig = $twig;
 		$this->twig->addGlobal('_sloth', $this);
+
+		if ($default_layout !== null) {
+			$this->setLayout($default_layout, $default_layout_attrs);
+		}
 	}
 
 
@@ -45,14 +49,23 @@ class Sloth implements \ArrayAccess
 	}
 
 
-	public function setLayout($layout, $attributes = [])
+	public function setLayout(string $layout, array $attributes = null)
 	{
 		$this->layout = $layout;
-		$this->layout_attr = $attributes;
+
+		if ($attributes !== null) {
+			$this->layout_attr = $attributes;
+		}
 	}
 
 
-	public function slot($slot_name)
+	public function setLayoutAttribute(string $attr, $value)
+	{
+		$this->layout_attr[$attr] = $value;
+	}
+
+
+	public function slot(string $slot_name)
 	{
 		if (!isset($this->slots[$slot_name])) {
 			$this->slots[$slot_name] = new Slot($slot_name, $this);

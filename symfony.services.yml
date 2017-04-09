@@ -6,10 +6,14 @@
 #     imports:
 #         - { resource: "../../vendor/smalldb/template-sloth/symfony.services.yml" }
 #
+
+parameters:
+        sloth.default_layout: ~
+
 services:
         sloth:
                 class: Smalldb\TemplateSloth\Sloth
-                arguments: [ '@twig' ]
+                arguments: [ '@twig', '%sloth.default_layout%', [] ]
                 lazy: true
 
         sloth.twig.extension:

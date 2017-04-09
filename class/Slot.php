@@ -28,7 +28,7 @@ class Slot
 	protected $serial = 1;
 
 
-	public function __construct($slot_name, Sloth $sloth)
+	public function __construct(string $slot_name, Sloth $sloth)
 	{
 		$this->slot_name = $slot_name;
 		$this->sloth = $sloth;
@@ -40,7 +40,7 @@ class Slot
 	/**
 	 * Add a fragment into the slot queue.
 	 */
-	public function add(int $weight, $template, $arguments = [])
+	public function add(int $weight, string $template, array $arguments = [])
 	{
 		// Penalty stabilizes sort used by the queue
 		// lim_{$serial -> inf} $penalty  =  0
