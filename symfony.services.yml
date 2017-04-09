@@ -19,3 +19,10 @@ services:
                 private: true
                 lazy: true
 
+        sloth.argument_resolver:
+                class: Smalldb\TemplateSloth\Symfony\ArgumentValueResolver
+                arguments: [ '@sloth' ]
+                tags:
+                        - { name: controller.argument_value_resolver, priority: 50 }
+                private: true
+
