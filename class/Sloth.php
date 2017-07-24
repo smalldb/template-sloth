@@ -18,6 +18,7 @@
 
 namespace Smalldb\TemplateSloth;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Smalldb\TemplateSloth\TwigExtension\SlothExtension;
 
@@ -81,7 +82,23 @@ class Sloth implements \ArrayAccess
 	}
 
 
+	public function render()
+	{
+		return $this->twig->render($this->layout, $this->layout_attr);
+	}
+
+
 	public function response($status = 200, $headers = [])
+	{
+		if ($this->layout === null) {
+			throw new \RuntimeException('Layout not specified.');
+		}
+
+		return new Response($this->render(), $status, $headers);
+	}
+
+
+	public function streamedResponse($status = 200, $headers = [])
 	{
 		if ($this->layout === null) {
 			throw new \RuntimeException('Layout not specified.');
