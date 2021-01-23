@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2017, Josef Kufner  <josef@kufner.cz>
+ * Copyright (c) 2017-2021, Josef Kufner  <josef@kufner.cz>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,11 @@
 
 namespace Smalldb\TemplateSloth\TwigExtension;
 
-use Twig_Node;
-use Twig_Node_Expression;
-use Twig_Compiler;
+use Twig\Node\Node;
+use Twig\Compiler;
 
 
-class SlotNode extends \Twig_Node
+class SlotNode extends Node
 {
 
 	public function __construct($slot_name, $line, $tag = null)
@@ -31,7 +30,7 @@ class SlotNode extends \Twig_Node
 		parent::__construct(['slot_name' => $slot_name], [], $line, $tag);
 	}
 
-	public function compile(Twig_Compiler $compiler)
+	public function compile(Compiler $compiler)
 	{
 		// include: $this->loadTemplate("included_file.html", "parent_file.html", 35)->display($context);
 		$compiler->addDebugInfo($this);

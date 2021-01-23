@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2017, Josef Kufner  <josef@kufner.cz>
+ * Copyright (c) 2017-2021, Josef Kufner  <josef@kufner.cz>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,26 +18,26 @@
 
 namespace Smalldb\TemplateSloth\TwigExtension;
 
-use Twig_TokenParser;
-use Twig_Token;
+use Twig\TokenParser\AbstractTokenParser;
+use Twig\Token;
 
 
-class SlotTokenParser extends Twig_TokenParser
+class SlotTokenParser extends AbstractTokenParser
 {
 
-	public function parse(Twig_Token $token)
+	public function parse(Token $token): SlotNode
 	{
 		$parser = $this->parser;
 		$stream = $parser->getStream();
 
 		$slot_name = $parser->getExpressionParser()->parseExpression();
-		$stream->expect(Twig_Token::BLOCK_END_TYPE);
+		$stream->expect(Token::BLOCK_END_TYPE);
 
 		return new SlotNode($slot_name, $token->getLine(), $this->getTag());
 	}
 
 
-	public function getTag()
+	public function getTag(): string
 	{
 		return 'slot';
 	}

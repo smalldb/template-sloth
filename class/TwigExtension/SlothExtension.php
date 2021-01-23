@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2017, Josef Kufner  <josef@kufner.cz>
+ * Copyright (c) 2017-2021, Josef Kufner  <josef@kufner.cz>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +18,15 @@
 
 namespace Smalldb\TemplateSloth\TwigExtension;
 
-use Twig_Extension;
-use Twig_SimpleTest as Twig_Test;
-use Twig_SimpleFunction as Twig_Function;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigTest;
+use Twig\TwigFunction;
 
 
-class SlothExtension extends Twig_Extension
+class SlothExtension extends AbstractExtension
 {
 
-	public function getTokenParsers()
+	public function getTokenParsers(): array
 	{
 		return [
 			new SlotTokenParser(),
@@ -34,18 +34,18 @@ class SlothExtension extends Twig_Extension
 	}
 
 
-	public function getTests()
+	public function getTests(): array
 	{
 		return [
-			new Twig_Test('empty_slot', null, ['node_class' => 'Smalldb\TemplateSloth\TwigExtension\IsSlotEmptyTest']),
+			new TwigTest('empty_slot', null, ['node_class' => IsSlotEmptyTest::class]),
 		];
 	}
 
 
-	public function getFunctions()
+	public function getFunctions(): array
 	{
 		return [
-			new Twig_Function('slot', null, ['node_class' => 'Smalldb\TemplateSloth\TwigExtension\SlotFunction']),
+			new TwigFunction('slot', null, ['node_class' => SlotFunction::class]),
 		];
 	}
 

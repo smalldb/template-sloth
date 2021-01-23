@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2017, Josef Kufner  <josef@kufner.cz>
+ * Copyright (c) 2017-2021, Josef Kufner  <josef@kufner.cz>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +18,14 @@
 
 namespace Smalldb\TemplateSloth\TwigExtension;
 
-use Twig_Compiler;
-use Twig_Node_Expression_Test;
+use Twig\Compiler;
+use Twig\Node\Expression\TestExpression;
 
 
-class IsSlotEmptyTest extends Twig_Node_Expression_Test
+class IsSlotEmptyTest extends TestExpression
 {
 
-	public function compile(Twig_Compiler $compiler)
+	public function compile(Compiler $compiler): void
 	{
 		$compiler
 			->raw("(!isset(\$context['_sloth']) || \$context['_sloth']->slot(")

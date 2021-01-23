@@ -21,6 +21,7 @@ namespace Smalldb\TemplateSloth;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Smalldb\TemplateSloth\TwigExtension\SlothExtension;
+use Twig\Environment;
 
 
 class Sloth implements \ArrayAccess
@@ -33,7 +34,7 @@ class Sloth implements \ArrayAccess
 	protected $slots = [];
 
 
-	public function __construct(\Twig_Environment $twig, string $default_layout = null, array $default_layout_attrs = [])
+	public function __construct(Environment $twig, string $default_layout = null, array $default_layout_attrs = [])
 	{
 		$this->twig = $twig;
 		$this->twig->addGlobal('_sloth', $this);
@@ -66,7 +67,7 @@ class Sloth implements \ArrayAccess
 	}
 
 
-	public function slot(string $slot_name)
+	public function slot(string $slot_name): Slot
 	{
 		if (!isset($this->slots[$slot_name])) {
 			$this->slots[$slot_name] = new Slot($slot_name, $this);
@@ -76,19 +77,19 @@ class Sloth implements \ArrayAccess
 	}
 
 
-	public function display()
+	public function display(): void
 	{
-		return $this->twig->display($this->layout, $this->layout_attr);
+		$this->twig->display($this->layout, $this->layout_attr);
 	}
 
 
-	public function render()
+	public function render(): string
 	{
 		return $this->twig->render($this->layout, $this->layout_attr);
 	}
 
 
-	public function response($status = 200, $headers = [])
+	public function response($status = 200, $headers = []): Response
 	{
 		if ($this->layout === null) {
 			throw new \RuntimeException('Layout not specified.');
@@ -98,25 +99,25 @@ class Sloth implements \ArrayAccess
 	}
 
 
-	public function streamedResponse($status = 200, $headers = [])
+	public function streamedResponse($status = 200, $headers = []): StreamedResponse
 	{
 		if ($this->layout === null) {
 			throw new \RuntimeException('Layout not specified.');
 		}
 
 		return new StreamedResponse(function() {
-			return $this->display();
+			$this->display();
 		}, $status, $headers);
 	}
 
 
-	public function offsetExists($offset)
+	public function offsetExists($offset): bool
 	{
 		return isset($this->slots[$offset]);
 	}
 
 
-	public function offsetGet($offset)
+	public function offsetGet($offset): Slot
 	{
 		return $this->slot($offset);
 	}
@@ -124,13 +125,13 @@ class Sloth implements \ArrayAccess
 
 	public function offsetSet($offset, $value)
 	{
-		throw \RuntimeException('Invalid operation.');
+		throw new \RuntimeException('Invalid operation.');
 	}
 
 
 	public function offsetUnset($offset)
 	{
-		throw \RuntimeException('Invalid operation.');
+		throw new \RuntimeException('Invalid operation.');
 	}
 
 

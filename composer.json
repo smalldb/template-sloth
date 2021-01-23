@@ -11,9 +11,9 @@
         }
     ],
     "require": {
-        "php": ">=5.6",
-        "symfony/http-foundation": "^3.2",
-        "twig/twig": "*"
+        "php": ">=7.1",
+        "symfony/http-foundation": ">=3.2",
+        "twig/twig": ">=3.2"
     },
     "require-dev": {
         "smalldb/doc-tools": "dev-master"

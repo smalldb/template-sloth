@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2017, Josef Kufner  <josef@kufner.cz>
+ * Copyright (c) 2017-2021, Josef Kufner  <josef@kufner.cz>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ class Slot
 	/**
 	 * Add a fragment into the slot queue.
 	 */
-	public function add(int $weight, string $template, array $arguments = [])
+	public function add(int $weight, string $template, array $arguments = []): self
 	{
 		// Penalty stabilizes sort used by the queue
 		// lim_{$serial -> inf} $penalty  =  0
@@ -55,7 +55,7 @@ class Slot
 	/**
 	 * Returns true if slot is empty.
 	 */
-	public function isEmpty()
+	public function isEmpty(): bool
 	{
 		return $this->fragmentQueue->isEmpty();
 	}

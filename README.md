@@ -13,13 +13,9 @@ Installation
 
 Using Composer:
 
-```.json
-{
-    "require": {
-        "smalldb/template-sloth": "dev-master"
-    },
-}
-```
+`````
+composer require smalldb/template-sloth
+`````
 
 Symfony's `config.yml` — add `sloth` service, it will register into Twig
 automatically:

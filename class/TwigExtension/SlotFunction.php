@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright (c) 2017, Josef Kufner  <josef@kufner.cz>
+ * Copyright (c) 2017-2021, Josef Kufner  <josef@kufner.cz>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +18,14 @@
 
 namespace Smalldb\TemplateSloth\TwigExtension;
 
-use Twig_Compiler;
-use Twig_Node_Expression_Function;
+use Twig\Compiler;
+use Twig\Node\Expression\FunctionExpression;
 
 
-class SlotFunction extends Twig_Node_Expression_Function
+class SlotFunction extends FunctionExpression
 {
 
-	public function compile(Twig_Compiler $compiler)
+	public function compile(Compiler $compiler)
 	{
 		$compiler
 			->raw("(\$context['_sloth']->slot(")
