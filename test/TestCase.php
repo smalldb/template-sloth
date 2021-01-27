@@ -1,6 +1,6 @@
-<?php
+<?php declare(strict_types = 1);
 /*
- * Copyright (c) 2017, Josef Kufner  <josef@kufner.cz>
+ * Copyright (c) 2021, Josef Kufner  <josef@kufner.cz>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +16,26 @@
  *
  */
 
-require(dirname(__DIR__).'/vendor/autoload.php');
+namespace Smalldb\TemplateSloth\Tests;
 
-function init_sloth($templates)
+use PHPUnit\Framework\TestCase as PHPUnitTestCase;
+use Smalldb\TemplateSloth\Sloth;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
+
+
+abstract class TestCase extends PHPUnitTestCase
 {
-	$loader = new Twig_Loader_Array($templates);
-	$twig = new Twig_Environment($loader, [ 'cache' => false ]);
 
-	$sloth = new Smalldb\TemplateSloth\Sloth($twig);
-	$sloth->registerExtension();
+	function spawnSloth($templates): Sloth
+	{
+		$loader = new ArrayLoader($templates);
+		$twig = new Environment($loader, [ 'cache' => false ]);
 
-	return $sloth;
+		$sloth = new Sloth($twig);
+		$sloth->registerExtension();
+
+		return $sloth;
+	}
+
 }
-
