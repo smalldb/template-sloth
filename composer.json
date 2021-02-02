@@ -18,7 +18,9 @@
     "require-dev": {
         "smalldb/doc-tools": "dev-master",
         "phpunit/phpunit": "^9.5",
-        "symfony/http-kernel": "^5.2"
+        "symfony/http-kernel": "^5.2",
+        "symfony/dependency-injection": "^5.2",
+        "symfony/config": "^5.2"
     },
     "autoload": {
         "psr-4": {
