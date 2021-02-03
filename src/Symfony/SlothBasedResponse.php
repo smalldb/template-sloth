@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 /*
  * Copyright (c) 2021, Josef Kufner  <josef@kufner.cz>
  *
@@ -16,29 +16,12 @@
  *
  */
 
-namespace Smalldb\TemplateSloth\DependencyInjection;
+namespace Smalldb\TemplateSloth\Symfony;
 
-use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-use Symfony\Component\Config\Definition\ConfigurationInterface;
+use Smalldb\TemplateSloth\Sloth;
 
 
-class Configuration implements ConfigurationInterface
+interface SlothBasedResponse
 {
-
-	public function getConfigTreeBuilder(): TreeBuilder
-	{
-		$treeBuilder = new TreeBuilder('template_sloth');
-		$rootNode = $treeBuilder->getRootNode();
-
-		$ch = $rootNode->children();
-
-		$ch->scalarNode('default_layout')
-			->info('Filename of a Twig template to use by default.')
-			->defaultValue('base.html.twig')
-			->end();
-
-		return $treeBuilder;
-	}
-
+	public function getSloth(): Sloth;
 }
-

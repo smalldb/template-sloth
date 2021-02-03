@@ -16,8 +16,9 @@
  *
  */
 
-namespace Smalldb\TemplateSloth\DependencyInjection;
+namespace Smalldb\TemplateSloth\Symfony;
 
+use Smalldb\TemplateSloth\Symfony\Configuration;
 use Smalldb\TemplateSloth\Sloth;
 use Smalldb\TemplateSloth\Symfony\ArgumentValueResolver;
 use Smalldb\TemplateSloth\TwigExtension\SlothExtension;

@@ -18,8 +18,8 @@
 
 namespace Smalldb\TemplateSloth;
 
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
+use Smalldb\TemplateSloth\Symfony\SlothResponse;
+use Smalldb\TemplateSloth\Symfony\SlothStreamedResponse;
 use Smalldb\TemplateSloth\TwigExtension\SlothExtension;
 use Twig\Environment;
 
@@ -79,35 +79,33 @@ class Sloth implements \ArrayAccess
 
 	public function display(): void
 	{
+		if ($this->layout === null) {
+			throw new \RuntimeException('Layout not specified.');
+		}
+
 		$this->twig->display($this->layout, $this->layout_attr);
 	}
 
 
 	public function render(): string
 	{
+		if ($this->layout === null) {
+			throw new \RuntimeException('Layout not specified.');
+		}
+
 		return $this->twig->render($this->layout, $this->layout_attr);
 	}
 
 
-	public function response($status = 200, $headers = []): Response
+	public function response($status = 200, $headers = []): SlothResponse
 	{
-		if ($this->layout === null) {
-			throw new \RuntimeException('Layout not specified.');
-		}
-
-		return new Response($this->render(), $status, $headers);
+		return new SlothResponse($this, $status, $headers);
 	}
 
 
-	public function streamedResponse($status = 200, $headers = []): StreamedResponse
+	public function streamedResponse($status = 200, $headers = []): SlothStreamedResponse
 	{
-		if ($this->layout === null) {
-			throw new \RuntimeException('Layout not specified.');
-		}
-
-		return new StreamedResponse(function() {
-			$this->display();
-		}, $status, $headers);
+		return new SlothStreamedResponse($this, $status, $headers);
 	}
 
 

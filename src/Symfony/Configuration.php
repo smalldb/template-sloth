@@ -16,25 +16,29 @@
  *
  */
 
-namespace Smalldb\TemplateSloth;
+namespace Smalldb\TemplateSloth\Symfony;
 
-use Smalldb\TemplateSloth\Symfony\TemplateSlothExtension;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 
-class TemplateSlothBundle extends Bundle
+class Configuration implements ConfigurationInterface
 {
 
-	public function getContainerExtension(): TemplateSlothExtension
+	public function getConfigTreeBuilder(): TreeBuilder
 	{
-		return new TemplateSlothExtension();
-	}
+		$treeBuilder = new TreeBuilder('template_sloth');
+		$rootNode = $treeBuilder->getRootNode();
 
+		$ch = $rootNode->children();
 
-	public function getContainerExtensionClass(): string
-	{
-		return TemplateSlothExtension::class;
+		$ch->scalarNode('default_layout')
+			->info('Filename of a Twig template to use by default.')
+			->defaultValue('base.html.twig')
+			->end();
+
+		return $treeBuilder;
 	}
 
 }
+
