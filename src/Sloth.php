@@ -67,6 +67,12 @@ class Sloth implements \ArrayAccess
 	}
 
 
+	protected function configureLayoutAttributes(Environment $twig, $layoutAttrs)
+	{
+		$twig->addGlobal('layout', $layoutAttrs);
+	}
+
+
 	public function slot(string $slot_name): Slot
 	{
 		if (!isset($this->slots[$slot_name])) {
@@ -83,7 +89,8 @@ class Sloth implements \ArrayAccess
 			throw new \RuntimeException('Layout not specified.');
 		}
 
-		$this->twig->display($this->layout, $this->layout_attr);
+		$this->configureLayoutAttributes($this->twig, $this->layout_attr);
+		$this->twig->display($this->layout);
 	}
 
 
@@ -93,7 +100,8 @@ class Sloth implements \ArrayAccess
 			throw new \RuntimeException('Layout not specified.');
 		}
 
-		return $this->twig->render($this->layout, $this->layout_attr);
+		$this->configureLayoutAttributes($this->twig, $this->layout_attr);
+		return $this->twig->render($this->layout);
 	}
 
 

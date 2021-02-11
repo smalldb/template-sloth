@@ -32,7 +32,7 @@ class InitTest extends TestCase
 	public function testSlot()
 	{
 		$templates = [
-			'layout.twig' => "<html class=\"{{ html_class }}\">\n"
+			'layout.twig' => "<html class=\"{{ layout.html_class }}\">\n"
 				. "{% slot 'content' %}\n</html>\n",
 			'div.twig' => "<div>{{ text }}</div>\n",
 		];
